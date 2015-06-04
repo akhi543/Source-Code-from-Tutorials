@@ -38,23 +38,28 @@ public class Main extends Application {
         fileSizeColumn = new TableColumn("Size");
         progressColumn = new TableColumn("Progress");
         statusColumn = new TableColumn("Status");
-        
+        pauseResumeButton = new Button("Pause");
+        cancelButton = new Button("Cancel");
+        deleteButton = new Button("Delete");
+        downloadsTable.getColumns().addAll(fileNameColumn, urlColumn, fileSizeColumn, progressColumn, statusColumn);
         box1 = new HBox(2);
         box2 = new HBox(2);
         box3 = new HBox(2);
         
-        
+        box1.getChildren().addAll(urlTextBox, addDownload);
+        box2.getChildren().add(downloadsTable);
+        box3.getChildren().addAll(pauseResumeButton, deleteButton, cancelButton);
         
         addDownload.setOnAction(e -> {
-            System.out.println("Wow!!");
+            String t = urlTextBox.getText();
         });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(addDownload);
+        FlowPane root = new FlowPane();
+        root.getChildren().addAll(box1,box2,box3);
         
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 500,500);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Download manager");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
