@@ -1,3 +1,5 @@
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -5,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import java.net.*;
 
 public class Main extends Application {
     
@@ -24,12 +27,12 @@ public class Main extends Application {
     HBox box2;
     HBox box3;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         launch(args);
     }
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         urlTextBox = new TextField("Put URL here..");
         addDownload = new Button("Add Download");
         downloadsTable = new TableView();
@@ -52,6 +55,23 @@ public class Main extends Application {
         
         addDownload.setOnAction(e -> {
             String t = urlTextBox.getText();
+            URL url;
+            URLConnection uc;
+            try {
+                url = new URL(t);
+                uc = url.openConnection();
+                uc.connect();
+                int size = uc.getContentLength();
+                String fileName = url.getFile();
+                fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+                RandomAccessFile file = new RandomAccessFile("myfile2.png", "rw");
+                int c;
+                InputStream stream = uc.getInputStream();
+                while((c = stream.read()) != -1) {
+                    file.write(c);
+                }
+            }
+            catch(Exception ex) {}
         });
         
         FlowPane root = new FlowPane();
