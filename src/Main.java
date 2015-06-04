@@ -61,10 +61,10 @@ public class Main extends Application {
                 url = new URL(t);
                 uc = url.openConnection();
                 uc.connect();
-                int size = uc.getContentLength();
+//                int size = uc.getContentLength();
                 String fileName = url.getFile();
                 fileName = fileName.substring(fileName.lastIndexOf('/')+1);
-                RandomAccessFile file = new RandomAccessFile("myfile2.png", "rw");
+                RandomAccessFile file = new RandomAccessFile("myfile3.png", "rw");
                 int c;
                 InputStream stream = uc.getInputStream();
                 while((c = stream.read()) != -1) {
